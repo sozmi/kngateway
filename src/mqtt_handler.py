@@ -26,16 +26,17 @@ def check_mqtt_connection(client):
     except Exception as e:
         return False, str(e)
 
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
+def on_connect(client, userdata, flags, reason_code, properties):
+    if reason_code == 0:
         logger.info("Подключено к MQTT брокеру")
         client.subscribe(MQTT_TOPIC_COMMAND)
         logger.info(f"Подписались на топик {MQTT_TOPIC_COMMAND}")
     else:
-        logger.error(f"Ошибка подключения к MQTT, код {rc}")
+        logger.error(f"Ошибка подключения к MQTT, код {reason_code}")
 
-def on_disconnect(client, userdata, rc):
-    logger.warning("Отключено от MQTT брокера")
+def on_disconnect(client, userdata, reason_code, properties):
+    logger.warning(f"Отключено от MQTT брокера, код {reason_code}")
+
 
 def on_message(client, userdata, msg):
     try:

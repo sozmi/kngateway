@@ -4,6 +4,7 @@ import sys
 import threading
 import paho.mqtt.client as mqtt
 
+
 from .config import (
     MQTT_BROKER, MQTT_PORT, MQTT_USE_TLS,
     MQTT_USER, MQTT_PASSWORD, LOG_LEVEL, HEALTH_SERVER_PORT
@@ -20,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger("KeeneticMQTT")
 
 def main():
-    client = mqtt.Client()
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
     if MQTT_USER and MQTT_PASSWORD:
         client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
     if MQTT_USE_TLS:

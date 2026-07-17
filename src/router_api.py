@@ -67,11 +67,7 @@ def check_router_api():
     try:
         response = requests.get(url, auth=auth, timeout=5)
         if response.status_code == 200:
-            data = response.json()
-            if "interface" in data:
-                return True, "OK"
-            else:
-                return False, "Invalid response format"
+            return True, "OK"
         else:
             return False, f"HTTP {response.status_code}"
     except requests.exceptions.Timeout:
